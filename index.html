@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidades Escolares - Tijucas/SC</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+
+        .search-container {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        #searchBox {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        #searchBox:focus {
+            border-color: var(--secondary-color);
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            margin: 0 0 15px 0;
+            color: var(--primary-color);
+            font-size: 1.2em;
+            line-height: 1.4;
+        }
+
+        .card p {
+            margin: 8px 0;
+            font-size: 1em;
+            color: #555;
+            display: flex;
+            align-items: center;
+        }
+
+        .card p strong {
+            color: var(--primary-color);
+            width: 80px;
+        }
+
+        .phone-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .phone-link:hover {
+            text-decoration: underline;
+        }
+
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 40px;
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+        
+        /* Ícones simples em CSS usando emojis ou caracteres para os labels */
+        .icon-bairro::before { content: "📍 "; }
+        .icon-contato::before { content: "📞 "; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🎓 Unidades Escolares - Tijucas/SC</h1>
+        
+        <div class="search-container">
+            <input type="text" id="searchBox" placeholder="Digite o nome da escola, bairro ou telefone para buscar...">
+        </div>
+
+        <div class="card-container" id="results">
+            <!-- Os resultados aparecerão aqui -->
+        </div>
+    </div>
+
+    <script>
+        // Dados extraídos do documento oficial
+        const escolas = [
+            { nome: "CEI Eneide Mannrich dos Santos", bairro: "Centro", contato: "(48) 3263-4589" },
+            { nome: "CEI Hercílio Giacomossi", bairro: "Nova Descoberta", contato: "(48) 3220-1183" },
+            { nome: "CEI Mãe Aurora", bairro: "Centro", contato: "(48) 3263-2728" },
+            { nome: "CEI Prof Marco Aurélio de Oliveira", bairro: "Areias", contato: "(48) 3263-5712" },
+            { nome: "CEI Silivia Telles", bairro: "Sul do Rio", contato: "(48) 3263-2215" },
+            { nome: "CEI Profª Maria Helena Machado", bairro: "Centro", contato: "(48) 3263-6201" },
+            { nome: "CMEI Profa Maria de Lourdes Souza Furtado", bairro: "Joáia", contato: "(48) 3220-1186" },
+            { nome: "CEI Zilda Maria Perixer", bairro: "Centro", contato: "(48) 3263-0305" },
+            { nome: "CEI Ivania Lemos Freitas", bairro: "Praça", contato: "(48) 3263-5463" },
+            { nome: "CE Professor Manoel dos Anjos", bairro: "Centro", contato: "(48) 3263-2892" },
+            { nome: "EEF Alexandre Ternes Filho", bairro: "Joáia", contato: "(48) 3263-5693" },
+            { nome: "EEF. Brilho do Sol", bairro: "Joáia", contato: "(48) 3263-2358" },
+            { nome: "EEF Dep. Walter Vicente Gomes", bairro: "Praça", contato: "(48) 3263-0337" },
+            { nome: "EEF João Caetano", bairro: "Areias", contato: "(48) 3263-0355" },
+            { nome: "EEF José Feller", bairro: "Oliveira", contato: "(48) 3220-1184" },
+            { nome: "EEF Madre Sabina", bairro: "Timbé", contato: "(48) 3220-0152" },
+            { nome: "EEF Marcilio M da Silva", bairro: "Morretes", contato: "(48) 3220-1185" },
+            { nome: "EEF Mercedes Júlia Adão", bairro: "Centro", contato: "(48) 3263-5952" },
+            { nome: "EEF Monsenhor Augusto Zucco", bairro: "Centro do Itinga", contato: "(48) 3263-9131" },
+            { nome: "EEF Osmário Giacomossi", bairro: "Nova Descoberta", contato: "(48) 3263-3487" },
+            { nome: "EEF Ondina Maria Dias", bairro: "XV de Novembro", contato: "(48) 3263-6849" },
+            { nome: "EEF. Santa Terezinha", bairro: "Universitário", contato: "(48) 3263-0317" },
+            { nome: "EEF. Campo Novo", bairro: "Campo Novo", contato: "(48) 3220-0134" },
+            { nome: "Pré-Escolar Criança Feliz", bairro: "Centro", contato: "(48) 3263-1862" }
+        ];
+
+        const searchBox = document.getElementById('searchBox');
+        const resultsContainer = document.getElementById('results');
+
+        // Função para formatar o link do WhatsApp/Telefone
+        function cleanPhone(phone) {
+            return phone.replace(/\D/g, ''); // Remove tudo que não é número
+        }
+
+        // Função para exibir as escolas na tela
+        function renderEscolas(dados) {
+            resultsContainer.innerHTML = ''; // Limpa os resultados anteriores
+
+            if (dados.length === 0) {
+                resultsContainer.innerHTML = '<div class="no-results">Nenhuma escola encontrada para a sua busca. 😔</div>';
+                return;
+            }
+
+            dados.forEach(escola => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <h3>${escola.nome}</h3>
+                    <p><strong class="icon-bairro">Bairro:</strong> ${escola.bairro}</p>
+                    <p><strong class="icon-contato">Contato:</strong> <a class="phone-link" href="tel:+55${cleanPhone(escola.contato)}">${escola.contato}</a></p>
+                `;
+                resultsContainer.appendChild(card);
+            });
+        }
+
+        // Renderiza todas as escolas ao carregar a página
+        renderEscolas(escolas);
+
+        // Evento de busca instantânea ao digitar
+        searchBox.addEventListener('input', (e) => {
+            const termoBusca = e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Remove acentos na busca
+
+            const resultadosFiltrados = escolas.filter(escola => {
+                const nomeNormalizado = escola.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const bairroNormalizado = escola.bairro.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const contatoSemFormatacao = cleanPhone(escola.contato);
+
+                return nomeNormalizado.includes(termoBusca) || 
+                       bairroNormalizado.includes(termoBusca) || 
+                       contatoSemFormatacao.includes(termoBusca) ||
+                       escola.contato.includes(termoBusca); // Permite buscar digitando "(48)..."
+            });
+
+            renderEscolas(resultadosFiltrados);
+        });
+    </script>
+</body>
+</html>

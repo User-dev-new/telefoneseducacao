@@ -6,146 +6,269 @@
     <title>Unidades Escolares - Tijucas/SC</title>
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --bg-color: #f4f7f6;
+            --primary: #0f172a;
+            --primary-accent: #2563eb;
+            --bg-body: #f8fafc;
             --card-bg: #ffffff;
-            --text-color: #333333;
+            --border-color: #e2e8f0;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --hover-row: #f1f5f9;
+            --badge-bg: #e0f2fe;
+            --badge-text: #0369a1;
         }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+            padding: 32px 16px;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 980px;
             margin: 0 auto;
         }
 
-        h1 {
+        header {
             text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 30px;
-            font-size: 2.2em;
+            margin-bottom: 28px;
         }
 
-        .search-container {
-            margin-bottom: 30px;
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Barra de pesquisa */
+        .search-section {
+            margin-bottom: 20px;
+        }
+
+        .search-box-wrapper {
             position: relative;
         }
 
         #searchBox {
             width: 100%;
-            padding: 15px 20px;
-            font-size: 16px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
+            padding: 16px 20px 16px 48px;
+            font-size: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            background-color: var(--card-bg);
             outline: none;
-            transition: border-color 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+            transition: all 0.2s ease;
         }
 
         #searchBox:focus {
-            border-color: var(--secondary-color);
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
         }
 
-        .card-container {
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .counter {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin: 10px 0 16px 4px;
+            font-weight: 500;
+        }
+
+        /* Estrutura da Tabela em 3 Colunas */
+        .table-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .table-header {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: 2.2fr 1.5fr 1.3fr;
+            background-color: #f1f5f9;
+            padding: 14px 20px;
+            border-bottom: 2px solid var(--border-color);
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
         }
 
-        .card {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border-left: 5px solid var(--secondary-color);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        }
-
-        .card h3 {
-            margin: 0 0 15px 0;
-            color: var(--primary-color);
-            font-size: 1.2em;
-            line-height: 1.4;
-        }
-
-        .card p {
-            margin: 8px 0;
-            font-size: 1em;
-            color: #555;
+        .table-body {
             display: flex;
+            flex-direction: column;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 2.2fr 1.5fr 1.3fr;
             align-items: center;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.15s ease;
         }
 
-        .card p strong {
-            color: var(--primary-color);
-            width: 80px;
+        .table-row:last-child {
+            border-bottom: none;
         }
 
-        .phone-link {
-            color: var(--secondary-color);
+        .table-row:hover {
+            background-color: var(--hover-row);
+        }
+
+        /* Coluna 1: Unidade Escolar */
+        .col-unidade {
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: var(--primary);
+            padding-right: 12px;
+        }
+
+        /* Coluna 2: Bairro */
+        .col-bairro {
+            padding-right: 12px;
+        }
+
+        .badge-bairro {
+            display: inline-block;
+            background-color: var(--badge-bg);
+            color: var(--badge-text);
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        /* Coluna 3: Telefone */
+        .col-telefone {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .phone-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--primary-accent);
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 0.92rem;
+            padding: 7px 12px;
+            border-radius: 8px;
+            background-color: #eff6ff;
+            border: 1px solid #dbeafe;
+            transition: all 0.2s ease;
+            white-space: nowrap;
         }
 
-        .phone-link:hover {
-            text-decoration: underline;
+        .phone-btn:hover {
+            background-color: var(--primary-accent);
+            color: #ffffff;
+            border-color: var(--primary-accent);
         }
 
-        .no-results {
+        /* Estado vazio */
+        .empty-state {
+            padding: 40px 20px;
             text-align: center;
-            grid-column: 1 / -1;
-            padding: 40px;
-            color: #7f8c8d;
-            font-size: 1.2em;
+            color: var(--text-muted);
+            font-size: 1rem;
         }
-        
-        /* Ícones simples em CSS usando emojis ou caracteres para os labels */
-        .icon-bairro::before { content: "📍 "; }
-        .icon-contato::before { content: "📞 "; }
+
+        /* Responsividade para telas menores */
+        @media (max-width: 680px) {
+            .table-header {
+                display: none;
+            }
+
+            .table-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 16px;
+            }
+
+            .col-telefone {
+                margin-top: 4px;
+            }
+
+            .phone-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>🎓 Unidades Escolares - Tijucas/SC</h1>
-        
-        <div class="search-container">
-            <input type="text" id="searchBox" placeholder="Digite o nome da escola, bairro ou telefone para buscar...">
+        <header>
+            <h1>Unidades Escolares - Tijucas</h1>
+            <p class="subtitle">Lista telefônica e endereços da rede municipal de ensino</p>
+        </header>
+
+        <div class="search-section">
+            <div class="search-box-wrapper">
+                <span class="search-icon">🔍</span>
+                <input 
+                    type="text" 
+                    id="searchBox" 
+                    placeholder="Digite o nome da unidade, bairro ou telefone..." 
+                    autocomplete="off"
+                >
+            </div>
+            <div id="counter" class="counter"></div>
         </div>
 
-        <div class="card-container" id="results">
-            <!-- Os resultados aparecerão aqui -->
+        <div class="table-card">
+            <div class="table-header">
+                <div>Unidade Escolar</div>
+                <div>Bairro</div>
+                <div>Telefone</div>
+            </div>
+            <div id="listRows" class="table-body"></div>
         </div>
     </div>
 
     <script>
-        // Dados extraídos do documento oficial
+        // Lista organizada em rigorosa ordem alfabética e com a correção solicitada
         const escolas = [
             { nome: "CEI Eneide Mannrich dos Santos", bairro: "Centro", contato: "(48) 3263-4589" },
             { nome: "CEI Hercílio Giacomossi", bairro: "Nova Descoberta", contato: "(48) 3220-1183" },
+            { nome: "CEI Ivania Lemos Freitas", bairro: "Praça", contato: "(48) 3263-5463" },
             { nome: "CEI Mãe Aurora", bairro: "Centro", contato: "(48) 3263-2728" },
             { nome: "CEI Prof Marco Aurélio de Oliveira", bairro: "Areias", contato: "(48) 3263-5712" },
-            { nome: "CEI Silivia Telles", bairro: "Sul do Rio", contato: "(48) 3263-2215" },
             { nome: "CEI Profª Maria Helena Machado", bairro: "Centro", contato: "(48) 3263-6201" },
-            { nome: "CMEI Profa Maria de Lourdes Souza Furtado", bairro: "Joáia", contato: "(48) 3220-1186" },
+            { nome: "CEI Professor Manoel dos Anjos", bairro: "Centro", contato: "(48) 3263-2892" },
+            { nome: "CEI Silivia Telles", bairro: "Sul do Rio", contato: "(48) 3263-2215" },
             { nome: "CEI Zilda Maria Perixer", bairro: "Centro", contato: "(48) 3263-0305" },
-            { nome: "CEI Ivania Lemos Freitas", bairro: "Praça", contato: "(48) 3263-5463" },
-            { nome: "CE Professor Manoel dos Anjos", bairro: "Centro", contato: "(48) 3263-2892" },
+            { nome: "CMEI Profa Maria de Lourdes Souza Furtado", bairro: "Joáia", contato: "(48) 3220-1186" },
             { nome: "EEF Alexandre Ternes Filho", bairro: "Joáia", contato: "(48) 3263-5693" },
-            { nome: "EEF. Brilho do Sol", bairro: "Joáia", contato: "(48) 3263-2358" },
             { nome: "EEF Dep. Walter Vicente Gomes", bairro: "Praça", contato: "(48) 3263-0337" },
             { nome: "EEF João Caetano", bairro: "Areias", contato: "(48) 3263-0355" },
             { nome: "EEF José Feller", bairro: "Oliveira", contato: "(48) 3220-1184" },
@@ -153,62 +276,74 @@
             { nome: "EEF Marcilio M da Silva", bairro: "Morretes", contato: "(48) 3220-1185" },
             { nome: "EEF Mercedes Júlia Adão", bairro: "Centro", contato: "(48) 3263-5952" },
             { nome: "EEF Monsenhor Augusto Zucco", bairro: "Centro do Itinga", contato: "(48) 3263-9131" },
-            { nome: "EEF Osmário Giacomossi", bairro: "Nova Descoberta", contato: "(48) 3263-3487" },
             { nome: "EEF Ondina Maria Dias", bairro: "XV de Novembro", contato: "(48) 3263-6849" },
-            { nome: "EEF. Santa Terezinha", bairro: "Universitário", contato: "(48) 3263-0317" },
+            { nome: "EEF Osmário Giacomossi", bairro: "Nova Descoberta", contato: "(48) 3263-3487" },
+            { nome: "EEF. Brilho do Sol", bairro: "Joáia", contato: "(48) 3263-2358" },
             { nome: "EEF. Campo Novo", bairro: "Campo Novo", contato: "(48) 3220-0134" },
+            { nome: "EEF. Santa Terezinha", bairro: "Universitário", contato: "(48) 3263-0317" },
             { nome: "Pré-Escolar Criança Feliz", bairro: "Centro", contato: "(48) 3263-1862" }
         ];
 
         const searchBox = document.getElementById('searchBox');
-        const resultsContainer = document.getElementById('results');
+        const listRows = document.getElementById('listRows');
+        const counterEl = document.getElementById('counter');
 
-        // Função para formatar o link do WhatsApp/Telefone
         function cleanPhone(phone) {
-            return phone.replace(/\D/g, ''); // Remove tudo que não é número
+            return phone.replace(/\D/g, '');
         }
 
-        // Função para exibir as escolas na tela
-        function renderEscolas(dados) {
-            resultsContainer.innerHTML = ''; // Limpa os resultados anteriores
+        function normalizeText(text) {
+            return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+
+        function renderRows(dados) {
+            listRows.innerHTML = '';
+            counterEl.textContent = `${dados.length} de ${escolas.length} unidades encontradas`;
 
             if (dados.length === 0) {
-                resultsContainer.innerHTML = '<div class="no-results">Nenhuma escola encontrada para a sua busca. 😔</div>';
+                listRows.innerHTML = `
+                    <div class="empty-state">
+                        Nenhuma unidade escolar encontrada.
+                    </div>
+                `;
                 return;
             }
 
-            dados.forEach(escola => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <h3>${escola.nome}</h3>
-                    <p><strong class="icon-bairro">Bairro:</strong> ${escola.bairro}</p>
-                    <p><strong class="icon-contato">Contato:</strong> <a class="phone-link" href="tel:+55${cleanPhone(escola.contato)}">${escola.contato}</a></p>
+            dados.forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'table-row';
+                row.innerHTML = `
+                    <div class="col-unidade">${item.nome}</div>
+                    <div class="col-bairro"><span class="badge-bairro">📍 ${item.bairro}</span></div>
+                    <div class="col-telefone">
+                        <a href="tel:+55${cleanPhone(item.contato)}" class="phone-btn">
+                            📞 ${item.contato}
+                        </a>
+                    </div>
                 `;
-                resultsContainer.appendChild(card);
+                listRows.appendChild(row);
             });
         }
 
-        // Renderiza todas as escolas ao carregar a página
-        renderEscolas(escolas);
-
-        // Evento de busca instantânea ao digitar
         searchBox.addEventListener('input', (e) => {
-            const termoBusca = e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Remove acentos na busca
+            const query = normalizeText(e.target.value.trim());
 
-            const resultadosFiltrados = escolas.filter(escola => {
-                const nomeNormalizado = escola.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                const bairroNormalizado = escola.bairro.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                const contatoSemFormatacao = cleanPhone(escola.contato);
+            const filtrados = escolas.filter(escola => {
+                const nomeNorm = normalizeText(escola.nome);
+                const bairroNorm = normalizeText(escola.bairro);
+                const telLimpo = cleanPhone(escola.contato);
 
-                return nomeNormalizado.includes(termoBusca) || 
-                       bairroNormalizado.includes(termoBusca) || 
-                       contatoSemFormatacao.includes(termoBusca) ||
-                       escola.contato.includes(termoBusca); // Permite buscar digitando "(48)..."
+                return nomeNorm.includes(query) || 
+                       bairroNorm.includes(query) || 
+                       telLimpo.includes(query) || 
+                       escola.contato.includes(query);
             });
 
-            renderEscolas(resultadosFiltrados);
+            renderRows(filtrados);
         });
+
+        // Inicialização
+        renderRows(escolas);
     </script>
 </body>
 </html>
